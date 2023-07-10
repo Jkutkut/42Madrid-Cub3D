@@ -6,7 +6,7 @@
 /*   By: jre-gonz <jre-gonz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 17:40:06 by jre-gonz          #+#    #+#             */
-/*   Updated: 2023/07/10 18:03:26 by jre-gonz         ###   ########.fr       */
+/*   Updated: 2023/07/10 20:41:04 by jre-gonz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,21 @@ typedef struct s_vector
 	float	x;
 	float	y;
 } t_vector;
+
+typedef struct s_ray
+{
+	t_vector	posv;
+	t_vector	posh;
+	// TODO
+} t_ray;
+
+/**
+ * TODO
+ * - raycasting must return the distance to a wall.
+ * - It will setup a ray to the start of a wall in the direction to check. Both v and h.
+ * - It will go until finds any wall, advancing 1 by 1.
+ * - Return the min dist. If done at the same time, calculation is instant
+ */
 
 // -------------------------
 t_vector	vec_new(float x, float y);

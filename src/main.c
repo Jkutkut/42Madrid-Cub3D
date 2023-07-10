@@ -6,11 +6,20 @@
 /*   By: jre-gonz <jre-gonz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 17:59:17 by jre-gonz          #+#    #+#             */
-/*   Updated: 2023/07/10 19:18:03 by jre-gonz         ###   ########.fr       */
+/*   Updated: 2023/07/10 20:27:52 by jre-gonz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <mlx.h>
+
+int	ft_abs(int nbr)
+{
+	if (nbr < 0)
+		return -nbr;
+	return nbr;
+}
+
+// ----------------------------------------
 
 typedef struct	s_data {
 	void	*img;
@@ -67,6 +76,14 @@ void	bg(t_data img)
 	}
 }
 
+void	draw_wall(t_data img, int x, int size)
+{
+	for (int i = -size / 2; i < size / 2; i++)
+	{
+		my_mlx_pixel_put(&img, x, 1080 / 2 + i, 0xff0000);
+	}
+}
+
 void	ray_tracing(t_data img, char **map)
 {
 	(void) img;
@@ -75,13 +92,12 @@ void	ray_tracing(t_data img, char **map)
 	// float	py = 5.0;
 
 	bg(img);
-
-	/*for (int col = 0, j; col < RESOLUTION_X; col++) {
-		float x = col / RESOLUTION_X - 0.5; // range from -0.5 to 0.5
-		float angle = atan2(x, FOCAL_LENGTH);
-		//var ray = map.cast(player, player.direction + angle, this.range);
-		drawColumn(col, ray, angle, map);
-	}*/
+	// --------------------
+	for (int angle = 0; angle < 100; angle++)
+	{
+		draw_wall(img, 1920 / 2 - angle, 100 - ft_abs(angle - 50) + 100);
+	}
+	// -------------------
 }
 
 // void	drawColumn(int col, void ray, float angle, char **map)
