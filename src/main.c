@@ -6,13 +6,9 @@
 /*   By: jre-gonz <jre-gonz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 17:59:17 by jre-gonz          #+#    #+#             */
-/*   Updated: 2023/07/06 17:14:55 by jre-gonz         ###   ########.fr       */
+/*   Updated: 2023/07/06 17:41:09 by jre-gonz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include <mlx.h>
-#include <math.h>
-#include <libft.h>
 
 typedef struct	s_data {
 	void	*img;

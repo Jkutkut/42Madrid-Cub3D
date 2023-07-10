@@ -28,7 +28,7 @@ endif
 #               PROJECT FILES                 #
 ### ---   ---   ---         ---   ---   --- ###
 
-NAME		= cub3d
+NAME		= cub3D
 
 SRC_FILES	= 	main.c
 
@@ -70,6 +70,7 @@ $(LIBFT_REPO):
 
 bin:
 	@mkdir -p $(dir $@)
+	@mkdir -p $(dir $@)/model
 
 bin/%.o: src/%.c bin
 	@echo "$(TITLE)Compiling${NC} $< -> $@\c"
@@ -87,6 +88,7 @@ fclean: clean
 	@echo "- ${RED}Removing${NC} $(NAME)"
 	@rm -f $(NAME)
 	@echo "Project ${YELLOW}$(NAME) ${GREEN}clean${NC}.\n"
+	@rm -f model_test
 
 re: fclean all
 
@@ -107,3 +109,11 @@ TODO:
 	@echo "*****************************************"
 	@grep "TODO" -nr -i --exclude-dir=".git" .
 	@echo "*****************************************"
+
+MODEL_SRCS =	model/test_vector.c \
+				model/vector.c
+
+MODEL_OBJS = $(MODEL_SRCS:%.c=bin/%.o)
+
+model_test: $(MODEL_OBJS)
+	$(CC) $(CFLAGS) $(INCLUDE) $(MODEL_OBJS) -o model_test
