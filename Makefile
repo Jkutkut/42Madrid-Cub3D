@@ -30,7 +30,8 @@ endif
 
 NAME		= cub3D
 
-SRC_FILES	= 	main.c
+SRC_FILES	= 	main.c \
+				model/vector.c
 
 SRC_OBJS 	= $(SRC_FILES:%.c=bin/%.o)
 
@@ -74,7 +75,7 @@ bin:
 
 bin/%.o: src/%.c bin
 	@echo "$(TITLE)Compiling${NC} $< -> $@\c"
-	@$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
+	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 	@echo " ${GREEN}[OK]${NC}"
 
 clean: $(LIBFT_REPO)

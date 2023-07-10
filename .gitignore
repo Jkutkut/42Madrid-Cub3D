@@ -1,4 +1,8 @@
 cub3d
+cub3D
+
+mlx/libmlx.a
+
 bin
 test*
 *test
