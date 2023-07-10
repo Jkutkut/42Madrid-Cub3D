@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jre-gonz <jre-gonz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 17:40:06 by jre-gonz          #+#    #+#             */
-/*   Updated: 2023/07/10 20:41:04 by jre-gonz         ###   ########.fr       */
+/*   Updated: 2023/07/10 22:31:04 by jre-gonz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,18 @@ typedef struct s_vector
 	float	y;
 } t_vector;
 
-typedef struct s_ray
+/*typedef struct s_ray
 {
 	t_vector	posv;
 	t_vector	posh;
 	// TODO
-} t_ray;
+} t_ray;*/
+
+typedef struct s_player
+{
+	t_vector	pos;
+	float		angle;
+}	t_player;
 
 /**
  * TODO

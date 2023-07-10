@@ -6,7 +6,7 @@
 /*   By: jre-gonz <jre-gonz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 17:59:17 by jre-gonz          #+#    #+#             */
-/*   Updated: 2023/07/10 20:27:52 by jre-gonz         ###   ########.fr       */
+/*   Updated: 2023/07/10 23:15:02 by jre-gonz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,11 @@ void	basic_test(t_data img)
 
 # define RESOLUTION_X 1920
 # define RESOLUTION_Y 1080
-# define FOCAL_LENGTH 0.8
 
-void	bg(t_data img)
+# define FOV 1.570796327 // PI/2 rad: Angle of vision of the player
+# define DTHETA 0.1570796 // PI/20 -> 10 rays per rad. TODO analyze
+
+void	bg(t_data *img)
 {
 	int y, x;
 
@@ -64,53 +66,56 @@ void	bg(t_data img)
 	{
 		for (x = 0; x < RESOLUTION_X; x++)
 		{
-			my_mlx_pixel_put(&img, x, y, 0xdbdbdb);
+			my_mlx_pixel_put(img, x, y, 0xdbdbdb);
 		}
 	}
 	for (; y < RESOLUTION_Y; y++)
 	{
 		for (x = 0; x < RESOLUTION_X; x++)
 		{
-			my_mlx_pixel_put(&img, x, y, 0x878787);
+			my_mlx_pixel_put(img, x, y, 0x878787);
 		}
 	}
 }
 
-void	draw_wall(t_data img, int x, int size)
+/*void	draw_wall(t_data img, int x, int size)
 {
 	for (int i = -size / 2; i < size / 2; i++)
 	{
 		my_mlx_pixel_put(&img, x, 1080 / 2 + i, 0xff0000);
 	}
-}
+}*/
 
-void	ray_tracing(t_data img, char **map)
+void	draw(t_data *img, char **map, t_player *player)
 {
-	(void) img;
 	(void) map;
-	// float	px = 5.0;
-	// float	py = 5.0;
 
 	bg(img);
 	// --------------------
-	for (int angle = 0; angle < 100; angle++)
+	player->angle = player->angle % (2 * PI);
+	float theta = - (FOV << 1);
+	while (theta < FOV << 1)
 	{
-		draw_wall(img, 1920 / 2 - angle, 100 - ft_abs(angle - 50) + 100);
+		float dist = raycast(map, player, theta);
+
+		//draw_wall(img, angle, dist);
+
+		theta += DTHETA;
+	}
+	// --------------------
+	for (int angle = -(FOV << 1); angle < FOV << 1; angle++)
+	{
 	}
 	// -------------------
 }
 
-// void	drawColumn(int col, void ray, float angle, char **map)
-// {
-
-// }
-
 
 int	main(void)
 {
-	void	*mlx;
-	void	*mlx_win;
-	t_data	img;
+	void		*mlx;
+	void		*mlx_win;
+	t_data		img;
+	t_player	player;
 
 	char	map[10][10] = {
 		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
@@ -125,13 +130,16 @@ int	main(void)
 		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
 	};
 
+	player.pos = vec_new(5, 5);
+	player.angle = PI / 2;
+
 	mlx = mlx_init();
 	mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
 	img.img = mlx_new_image(mlx, 1920, 1080);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
 								&img.endian);
 	// basic_test(img);
-	ray_tracing(img,(char **) map);
+	draw(&img, (char **) map, &player);
 	
 	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
 	mlx_loop(mlx);
