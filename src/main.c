@@ -6,11 +6,11 @@
 /*   By: jre-gonz <jre-gonz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 17:59:17 by jre-gonz          #+#    #+#             */
-/*   Updated: 2023/07/10 23:15:02 by jre-gonz         ###   ########.fr       */
+/*   Updated: 2023/07/11 16:04:45 by jre-gonz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <mlx.h>
+#include <cub3D.h>
 
 int	ft_abs(int nbr)
 {
@@ -78,13 +78,26 @@ void	bg(t_data *img)
 	}
 }
 
-/*void	draw_wall(t_data img, int x, int size)
+void	draw_wall_col(t_data *img, int x, int size)
 {
 	for (int i = -size / 2; i < size / 2; i++)
 	{
-		my_mlx_pixel_put(&img, x, 1080 / 2 + i, 0xff0000);
+		my_mlx_pixel_put(img, x, 1080 / 2 + i, 0xff0000);
 	}
-}*/
+}
+
+// ----------------------------------------
+
+float	raycast(char **map, t_player *player, float theta)
+{
+	(void) map;
+	(void) player;
+	(void) theta;
+	return 0.0; // TODO
+}
+
+// ----------------------------------------
+
 
 void	draw(t_data *img, char **map, t_player *player)
 {
@@ -92,21 +105,29 @@ void	draw(t_data *img, char **map, t_player *player)
 
 	bg(img);
 	// --------------------
-	player->angle = player->angle % (2 * PI);
-	float theta = - (FOV << 1);
-	while (theta < FOV << 1)
+	//player->angle = player->angle % (float) (2 * PI);
+	while (player->angle < 0)
+		player->angle += 2 * PI;
+	while (player->angle > 2 * PI)
+		player->angle -= 2 * PI; // TODO declare TWO_PI
+	float theta = - (FOV / 2);
+	while (theta < FOV / 2)
 	{
 		float dist = raycast(map, player, theta);
+		(void) dist;
 
-		//draw_wall(img, angle, dist);
+		float	real_angle = player->angle + theta; // TODO + or -
+
+		float dist_projection = dist * cos(real_angle);
+
+		int	wall_size = (32 * 30) / dist_projection;
+		int	x_screen = 500;
+
+		draw_wall_col(img, x_screen, wall_size);
 
 		theta += DTHETA;
 	}
 	// --------------------
-	for (int angle = -(FOV << 1); angle < FOV << 1; angle++)
-	{
-	}
-	// -------------------
 }
 
 

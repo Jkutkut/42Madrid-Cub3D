@@ -6,7 +6,7 @@
 /*   By: jre-gonz <jre-gonz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 17:40:06 by jre-gonz          #+#    #+#             */
-/*   Updated: 2023/07/10 22:31:04 by jre-gonz         ###   ########.fr       */
+/*   Updated: 2023/07/11 16:04:50 by jre-gonz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include <math.h>
 # include <libft.h>
 # include <stdio.h> // TODO debug
+
+# define PI 3.14159265
 
 typedef struct s_vector
 {
