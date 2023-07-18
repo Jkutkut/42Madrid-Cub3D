@@ -118,3 +118,22 @@ MODEL_OBJS = $(MODEL_SRCS:%.c=bin/%.o)
 
 model_test: $(MODEL_OBJS)
 	$(CC) $(CFLAGS) $(INCLUDE) $(MODEL_OBJS) -o model_test
+
+### ---   ---   ---         ---   ---   --- ###
+#                 Development                 #
+### ---   ---   ---         ---   ---   --- ###
+
+MLX_CODAM		=	mlx-codam
+MLX_CODAM_DIR	=	${MLX_CODAM}/build
+MLX_CODAM_LIB	=	${MLX_CODAM_DIR}/libmlx42.a
+
+codam: ${MLX_CODAM_LIB}
+
+${MLX_CODAM}:
+	git submodule update --init --recursive
+
+${MLX_CODAM_DIR}: ${MLX_CODAM}
+	cmake -B ${MLX_CODAM_DIR} ${MLX_CODAM}
+
+${MLX_CODAM_LIB}: ${MLX_CODAM_DIR}
+	make -C ${MLX_CODAM_DIR}
