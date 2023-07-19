@@ -56,13 +56,16 @@ TITLE		=	\033[38;5;33m
 
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(SRC_OBJS)
+$(NAME): $(LIBFT) ${MLX_PATH}/libmlx.a $(SRC_OBJS)
 	@echo "\n${TITLE}Compiling${NC} ${YELLOW}$(NAME)${NC} into ${YELLOW}$(NAME)${NC}\c"
 	@$(CC) $(CFLAGS) $(INCLUDE) $(MLXFLAGS) $(SRC_OBJS) $(LIBFT) -o $(NAME)
 	@echo " ${GREEN}[OK]${NC}\n"
 
 $(LIBFT): $(LIBFT_REPO)
 	@make -C $(LIBFT_PATH)
+
+${MLX_PATH}/libmlx.a:
+	@make -C ${MLX_PATH} 2> /dev/null
 
 # TODO debug
 $(LIBFT_REPO):
@@ -75,13 +78,15 @@ bin:
 
 bin/%.o: src/%.c bin
 	@echo "$(TITLE)Compiling${NC} $< -> $@\c"
-	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
+	@$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 	@echo " ${GREEN}[OK]${NC}"
 
 clean: $(LIBFT_REPO)
 	@echo "- ${RED}Removing${NC} binary directory"
 	@rm -rf $(BIN)
-	@echo "- ${RED}Removing${NC} libft directory"
+	@echo "- ${RED}Removing${NC} mlx"
+	@make -C ${MLX_PATH} clean > /dev/null
+	@echo "- ${RED}Removing${NC} libft"
 	@make -C $(LIBFT_PATH) fclean
 	@# TODO mlx
 

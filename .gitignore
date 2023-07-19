@@ -4,7 +4,10 @@ cub3D
 mlx/libmlx.a
 
 bin
+*.o
+*.a
 test*
 *test
 *.swp
 .vscode
+
